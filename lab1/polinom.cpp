@@ -38,8 +38,7 @@ TPolinom::operator std::string() const {
     ss << B << "*x";
   if (C != zero)
     ss << C;
-  auto str = ss.str().substr(1);
-  if (str.empty())
-    return "empty";
-  return str;
+  if (auto str = ss.str(); !str.empty())
+    return str.substr(1);
+  return "empty";
 }
