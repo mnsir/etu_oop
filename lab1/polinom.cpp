@@ -1,6 +1,7 @@
 #include "polinom.h"
 
 #include <cmath>
+#include <iomanip>
 #include <sstream>
 
 TPolinom::TPolinom(Number a, Number b, Number c) : A{a}, B{b}, C{c} {}
@@ -30,15 +31,14 @@ Number TPolinom::Calc(Number x) const { return A * x * x + B * x + C; }
 
 TPolinom::operator std::string() const {
   std::ostringstream ss;
+  ss << std::showpos;
   if (A != zero)
-    ss << A << "*x^2 ";
+    ss << A << "*x^2";
   if (B != zero)
-    ss << (B > zero ? '+' : '-') << ' ' << std::abs(B) << "*x ";
+    ss << B << "*x";
   if (C != zero)
-    ss << (C > zero ? '+' : '-') << ' ' << std::abs(C) << ' ';
-  auto str = ss.str();
-  if (str.empty())
-    return "empty";
-  str.pop_back();
-  return str;
+    ss << C;
+  if (auto str = ss.str(); !str.empty())
+    return str.substr(1);
+  return "empty";
 }
